@@ -18,3 +18,9 @@ chef_version '>= 12.1' if respond_to?(:chef_version)
 # a Supermarket.
 #
 # source_url 'https://github.com/<insert_org_here>/gl_mysql'
+
+depends 'mysql'
+depends 'mysql2_chef_gem'
+depends 'yum-epel'
+depends 'yum-mysql-community'
+depends 'database'
