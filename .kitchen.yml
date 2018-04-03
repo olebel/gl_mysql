@@ -19,3 +19,6 @@ suites:
     run_list:
       - recipe[gl_mysql::default]
       - recipe[gl_mysql::_enable_backup]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
