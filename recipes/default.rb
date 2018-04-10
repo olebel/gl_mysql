@@ -4,7 +4,7 @@
 #
 # Copyright:: 2017, The Authors, All Rights Reserved.
 
-include_recipe "#{node['gl_mysql']['mysql']['repo']}"
+include_recipe node['gl_mysql']['mysql']['repo']
 
 prod_user = node['gl_mysql']['mysql']['prod_user']
 prod_user_pass = node['gl_mysql']['mysql']['prod_user_pass']
@@ -33,10 +33,9 @@ end
 # TODO: Below dependency of mysql_chef_gem.
 # Should be revisited at some point
 # after fixes in mysql or mysql2_chef_gem
-#package 'mysql-community-devel' do
-#  version node['carbonite_icinga2']['mysql']['community_devel_package_version']
-#end
-
+# package 'mysql-community-devel' do
+#   version node['carbonite_icinga2']['mysql']['community_devel_package_version']
+# end
 
 # Configure the MySQL client.
 mysql_client 'default' do
@@ -55,7 +54,7 @@ mysql_connection_info = {
   host: node['gl_mysql']['mysql']['host'],
   username: 'root',
   socket: node['gl_mysql']['mysql']['unix_socket'],
-  password: init_root_password
+  password: init_root_password,
 }
 
 # Create Prod Database
@@ -69,7 +68,6 @@ mysql_database node['gl_mysql']['mysql']['stage_db_name'] do
   connection mysql_connection_info
   action :create
 end
-
 
 # Grant access for prod user
 mysql_database_user prod_user do
@@ -97,12 +95,12 @@ mysql_database_user stage_user do
   password stage_user_pass
   database_name node['gl_mysql']['mysql']['prod_db_name']
   host node['gl_mysql']['mysql']['host']
-  privileges [:select ]
+  privileges [:select]
   action [:grant]
 end
 
 # Place schema into tmp file on system:
-cookbook_file "/tmp/classicmodels.sql"
+cookbook_file '/tmp/classicmodels.sql'
 
 # Load app_prod database schema
 execute 'app_prod_schema_load' do

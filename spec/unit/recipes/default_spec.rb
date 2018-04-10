@@ -15,7 +15,6 @@ describe 'gl_mysql::default' do
       runner.converge(described_recipe)
     end
 
-
     it 'creates and configure mysql service' do
       expect(chef_run).to create_mysql_service('default')
       expect(chef_run).to create_mysql_config('default')
